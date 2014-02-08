@@ -1,4 +1,4 @@
 # -*- mode: makefile; -*-
 .PHONY:	prebuild
 prebuild: $(TARGET_RD) $(TARGET_RCPP_ATTRIBUTE)
-	R --slave -e "library(devtools); document();"
+	R --slave -e "library(devtools); document(clean=TRUE, reload=TRUE);"
