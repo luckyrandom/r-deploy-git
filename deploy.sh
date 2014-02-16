@@ -144,7 +144,7 @@ BRANCHS_TO_DEPLOY=${BRANCHS_TO_DEPLOY:-master}
 
 echo $BUILD_DIR
 
-if [[ $contains($BRANCHS_TO_DEPLOY, $BRANCH_SRC) ]]; then
+if contains $BRANCHS_TO_DEPLOY $BRANCH_SRC ; then
     deploy_default
 else
     echo "Skip. Only branches in ${BRANCHS_TO_DEPLOY} will be deployed"
