@@ -24,5 +24,5 @@ else
     wget https://github.com/luckyrandom/r-deploy-git/raw/master/deploy.sh -O deploy.sh
 fi
 
-chmod u+x deploy.sh && \\
+chmod u+x deploy.sh && \
 ./deploy.sh "$@"
