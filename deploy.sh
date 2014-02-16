@@ -81,7 +81,7 @@ commit(){
     if  git diff-index --quiet --cached HEAD ; then
         echo "Nothing to deploy"
     else
-        git commit -m "deploy..."
+        git commit -m "pkg built from  $(head -c 8 SRC_COMMIT_ID) \n [skip ci]"
     fi
 }
 
@@ -133,6 +133,7 @@ function contains() {
 # Set default values
 SUFFIX_DEPLOY=${SUFFIX_DEPLOY:-"-pkg"}
 BRANCH_SRC=${TRAVIS_BRANCH:-$(git symbolic-ref --short HEAD)}
+SRC_COMMIT_ID=$(git rev-parse HEAD)
 BRANCH_DEPLOY=${BRANCH_DEPLOY:-${BRANCH_SRC}${SUFFIX_DEPLOY}}
 REMOTE=${REMOTE:-origin}
 REMOTE_URL=${REMOTE_URL:-$(git config --get remote.$REMOTE.url)}
