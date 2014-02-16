@@ -81,7 +81,7 @@ commit(){
     if  git diff-index --quiet --cached HEAD ; then
         echo "Nothing to deploy"
     else
-        git commit -m "pkg built from  $(head -c 8 SRC_COMMIT_ID) \n [skip ci]"
+        git commit -m "pkg built from  $(echo ${SRC_COMMIT_ID} | head -c 8 ) \n [skip ci]"
     fi
 }
 
@@ -141,6 +141,9 @@ PROJECT_DIR=$(git rev-parse --show-toplevel)
 PROJECT_NAME=$(basename $PROJECT_DIR)
 BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
 BRANCHS_TO_DEPLOY=${BRANCHS_TO_DEPLOY:-master}
+
+git config --global user.email "you@example.com"
+git config --global user.name "travis-ci"
 
 echo $BUILD_DIR
 
