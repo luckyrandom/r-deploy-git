@@ -52,7 +52,7 @@ It only works in travis-ci for now.
   by running the following command in the project directory
 
 ```
-travis encrypt GH_TOKENS=your_token_created_on_github
+travis encrypt GH_TOKEN=your_token_created_on_github
 ```
 
 - Add the following contents to `.travis.yml`
