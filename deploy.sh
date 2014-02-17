@@ -150,9 +150,6 @@ set +x
 REMOTE_URL_HTTPS="https://<token>:${GH_TOKEN}@${REMOTE_URL#git://}"
 set -x
 
-git config --global user.email "you@example.com"
-git config --global user.name "travis-ci"
-
 echo $BUILD_DIR
 
 if contains $BRANCHS_TO_DEPLOY $BRANCH_SRC ; then
