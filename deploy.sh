@@ -147,7 +147,7 @@ BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
 BRANCHS_TO_DEPLOY=${BRANCHS_TO_DEPLOY:-master}
 
 set +x
-REMOTE_URL_HTTPS="https://<token>:${GH_TOKEN}@${REMOTE_URL#git://}"
+REMOTE_URL_HTTPS="https://${GH_TOKEN}@${REMOTE_URL#git://}"
 set -x
 
 echo $BUILD_DIR
