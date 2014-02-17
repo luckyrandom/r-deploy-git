@@ -44,8 +44,8 @@ prepare(){
     git clone "$PROJECT_DIR" "$PROJECT_NAME"
     cd ${BUILD_DIR}
 
-    git remote set-url origin "$REMOTE_URL" && \
-    git remote set-url --push origin "$REMOTE_URL"
+    git remote set-url origin "$REMOTE_URL_HTTPS" && \
+    git remote set-url --push origin "$REMOTE_URL_HTTPS"
 
     if ! ( git diff-index --quiet HEAD ) ; then
         echo "Warning: The work direcotry is not clean. The deploy script may not work as expected."
@@ -137,6 +137,7 @@ SRC_COMMIT_ID=$(git rev-parse HEAD)
 BRANCH_DEPLOY=${BRANCH_DEPLOY:-${BRANCH_SRC}${SUFFIX_DEPLOY}}
 REMOTE=${REMOTE:-origin}
 REMOTE_URL=${REMOTE_URL:-$(git config --get remote.$REMOTE.url)}
+REMOTE_URL_HTTPS="https://<token>:${GH_TOKEN}@${REMOTE_URL#git://}"
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 PROJECT_NAME=$(basename $PROJECT_DIR)
 BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
