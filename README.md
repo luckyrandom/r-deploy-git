@@ -15,6 +15,13 @@ The script `deploy.sh` is provided to handle sync and push to
 github. It works on travis-ci, so each successful built commit on
 master branch is prebuilt and deployed to master-pkg branch on github.
 
+# Benefits #
+ - The maintainers do not need to worry about sync Rd files any more.
+ - The generated files are not tracked in source branch, so nobody
+   will modify them by accident, saving your trouble from
+   explaining why they should not be edited.
+ - Only commits that pass the test will be deployed to pkg branch.
+
 # What does `deploy.sh` do? #
 It only works in travis-ci for now.
 - Assume Rd files and other generated files are not tracked in source branch.
