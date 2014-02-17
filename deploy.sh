@@ -152,8 +152,10 @@ set -x
 
 echo $BUILD_DIR
 
-if contains $BRANCHS_TO_DEPLOY $BRANCH_SRC ; then
-    deploy_default
-else
+if ! contains $BRANCHS_TO_DEPLOY $BRANCH_SRC ; then
     echo "Skip. Only branches in ${BRANCHS_TO_DEPLOY} will be deployed"
+elif [[ ${TRAVIS_PULL_REQUEST} != "false" ]] ; then
+    echo "Skip pull request"
+else
+    deploy_default
 fi
