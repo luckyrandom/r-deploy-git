@@ -23,7 +23,7 @@ switch_deploybranch() {
     git fetch -p
 
     if remote_has_branch $BRANCH_DEPLOY; then
-        git pull ${REMOTE} $BRANCH_DEPLOY
+        git fetch ${REMOTE} $BRANCH_DEPLOY
         git checkout $BRANCH_DEPLOY
         git merge $BRANCH_SRC --no-commit --no-edit || return 1
         ## FIXME: Fail to merge, need a better way to handle this case
