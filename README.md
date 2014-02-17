@@ -40,11 +40,11 @@ It only works in travis-ci for now.
 - Make commit and push to github
 
 # Usage #
-- *The script is at early stage. Use at your own risk.* The good news
+- **The script is at early stage. Use at your own risk.** The good news
   is that it may only make mess in master-pkg branch.
 - It only works on travis-ci for now.
 - It only works on master branch, and deploy to master-pkg branch. But you can change that easily by modifying the script.
-- *The later version of the script may change the interface and may not be backward compatible*
+- **The later version of the script may change the interface and may not be backward compatible**
 - Copy `deploy.sh` to R pkg directory and add it to `.Rbuildignore`.
 - Create a new token in [github application settings](https://github.com/settings/applications)
 - Encrypt the token following
