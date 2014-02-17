@@ -44,8 +44,10 @@ prepare(){
     git clone "$PROJECT_DIR" "$PROJECT_NAME"
     cd ${BUILD_DIR}
 
+    set +x
     git remote set-url origin "$REMOTE_URL_HTTPS" && \
     git remote set-url --push origin "$REMOTE_URL_HTTPS"
+    set -x
 
     if ! ( git diff-index --quiet HEAD ) ; then
         echo "Warning: The work direcotry is not clean. The deploy script may not work as expected."
@@ -86,7 +88,9 @@ commit(){
 }
 
 pushremote(){
-      git push $REMOTE ${BRANCH_DEPLOY}:${BRANCH_DEPLOY}
+    set +x
+    git push --quiet $REMOTE ${BRANCH_DEPLOY}:${BRANCH_DEPLOY}
+    set -x
 }
 
 complete(){
@@ -137,11 +141,14 @@ SRC_COMMIT_ID=$(git rev-parse HEAD)
 BRANCH_DEPLOY=${BRANCH_DEPLOY:-${BRANCH_SRC}${SUFFIX_DEPLOY}}
 REMOTE=${REMOTE:-origin}
 REMOTE_URL=${REMOTE_URL:-$(git config --get remote.$REMOTE.url)}
-REMOTE_URL_HTTPS="https://<token>:${GH_TOKEN}@${REMOTE_URL#git://}"
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 PROJECT_NAME=$(basename $PROJECT_DIR)
 BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
 BRANCHS_TO_DEPLOY=${BRANCHS_TO_DEPLOY:-master}
+
+set +x
+REMOTE_URL_HTTPS="https://<token>:${GH_TOKEN}@${REMOTE_URL#git://}"
+set -x
 
 git config --global user.email "you@example.com"
 git config --global user.name "travis-ci"
