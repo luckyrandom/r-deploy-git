@@ -83,7 +83,7 @@ commit(){
     if  git diff-index --quiet --cached HEAD ; then
         echo "Nothing to deploy"
     else
-        git commit -m "pkg built from  $(echo ${SRC_COMMIT_ID} | head -c 8 )"  -m "[skip ci]"
+        git commit -m "pkg built from  $(echo ${SRC_COMMIT_ID} | head -c 8 )"  -m "[ci skip]"
     fi
 }
 
