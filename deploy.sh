@@ -41,13 +41,10 @@ prepare(){
 
     mkdir _build
     cd _build
-    git clone "$PROJECT_DIR" "$PROJECT_NAME"
-    cd ${BUILD_DIR}
-
     set +x
-    git remote set-url origin "$REMOTE_URL_HTTPS" && \
-    git remote set-url --push origin "$REMOTE_URL_HTTPS"
+    git clone --quiet --depth=50 "$REMOTE_URL_HTTPS" "$PROJECT_NAME" 2>/dev/null 1>/dev/null
     set -x
+    cd ${BUILD_DIR}
 
     if ! ( git diff-index --quiet HEAD ) ; then
         echo "Warning: The work direcotry is not clean. The deploy script may not work as expected."
