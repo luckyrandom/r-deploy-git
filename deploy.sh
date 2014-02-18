@@ -42,7 +42,7 @@ prepare(){
     mkdir _build
     cd _build
     set +x
-    git clone --quiet --depth=50 "$REMOTE_URL_HTTPS" "$PROJECT_NAME" 2>/dev/null 1>/dev/null
+    git clone --quiet --depth=50 --branch=${BRANCH_SRC} "$REMOTE_URL_HTTPS" "$PROJECT_NAME" 2>/dev/null 1>/dev/null
     set -x
     cd ${BUILD_DIR}
 
