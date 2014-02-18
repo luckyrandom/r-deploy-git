@@ -111,7 +111,7 @@ deploy_default() {
         runcommand R --slave -e '"library(devtools); document(clean=TRUE, reload=TRUE);"'
     fi
 
-    forceadd "man/*.Rd" "R/RcppExports.R" "src/RcppExports.cpp"
+    forceadd "man/*.Rd" "R/RcppExports.R" "src/RcppExports.cpp" "NAMESPACE"
 
     commit
 
