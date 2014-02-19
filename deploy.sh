@@ -132,16 +132,14 @@ function contains() {
 }
 
 # Set default values
-SUFFIX_DEPLOY=${SUFFIX_DEPLOY:-"-pkg"}
-BRANCH_SRC=${TRAVIS_BRANCH:-$(git symbolic-ref --short HEAD)}
+BRANCH_SRC=${BRANCH_SRC:-"master-src"}
 SRC_COMMIT_ID=$(git rev-parse HEAD)
-BRANCH_DEPLOY=${BRANCH_DEPLOY:-${BRANCH_SRC}${SUFFIX_DEPLOY}}
+BRANCH_DEPLOY=${BRANCH_DEPLOY:-"master"}
 REMOTE=${REMOTE:-origin}
 REMOTE_URL=${REMOTE_URL:-$(git config --get remote.$REMOTE.url)}
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 PROJECT_NAME=$(basename $PROJECT_DIR)
 BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
-BRANCHS_TO_DEPLOY=${BRANCHS_TO_DEPLOY:-master}
 
 set +x
 REMOTE_URL_HTTPS="https://${GH_TOKEN}@${REMOTE_URL#git://}"
@@ -149,8 +147,8 @@ set -x
 
 echo $BUILD_DIR
 
-if ! contains $BRANCHS_TO_DEPLOY $BRANCH_SRC ; then
-    echo "Skip. Only branches in ${BRANCHS_TO_DEPLOY} will be deployed"
+if [[ ${BRANCH_SRC} != ${TRAVIS_BRANCH} ]] ; then
+    echo "Skip. Only the ${BRANCH_SRC} branch will be deployed"
 elif [[ ${TRAVIS_PULL_REQUEST} != "false" ]] ; then
     echo "Skip pull request"
 else
