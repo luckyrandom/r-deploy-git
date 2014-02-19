@@ -102,7 +102,9 @@ deploy_default() {
 
     prepare
 
-    if [ -e Makefile ]; then
+    if [[ ! -z $PREBUILD_COMMAND ]] ;then
+       runcommand "$PREBUILD_COMMAND"
+    elif [ -e Makefile ]; then
         runcommand "make"
     else
         runcommand R --slave -e '"library(devtools); document(clean=TRUE, reload=TRUE);"'
@@ -130,6 +132,57 @@ function contains() {
     echo "n"
     return 1
 }
+
+function print_help() {
+    cat <<EOF
+deploy -s [source_branch] -d [deploy_branch] -c [prebuild_command]
+
+OPTIONS
+ -s source branch. The default is master-src
+ -d deploy branch. The default is master
+ -c set the prebuild command. The prebuild command will be called in
+    bash as,
+
+       eval "\$prebuild_command"
+
+    It's good practice to put the whole command in single quato, and
+    use double quato in it, if nessecary, such as,
+
+       ' R --slave -e "library(devtools); document(clean=TRUE, reload=TRUE);"  '
+
+     If the prebuild_command argument is missing, 'make' will be
+     called by default if a Makefile exist, or call
+
+        R --slave -e "library(devtools); document(clean=TRUE, reload=TRUE);"
+
+     if fail to find Makefile
+EOF
+    }
+
+while getopts ":hs:d:c:" opt; do
+    case $opt in
+        h)
+            print_help
+            exit 0
+            ;;
+        s)
+            BRANCH_SRC="$OPTARG"
+            ;;
+        d)
+            BRANCH_DEPLOY="$OPTARG"
+            ;;
+        c)
+            PREBUILD_COMMAND="$OPTARG"
+            ;;
+        "?")
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+    esac
+done
 
 # Set default values
 BRANCH_SRC=${BRANCH_SRC:-"master-src"}
