@@ -53,9 +53,8 @@ It only works in travis-ci for now.
 
 # Usage #
 - **The script is at early stage. Use at your own risk.** The good news
-  is that it may only make mess in master-pkg branch.
+  is that it may only make mess in the deploy branch.
 - It only works on travis-ci for now.
-- It only works on master branch, and deploy to master-pkg branch. But you can change that easily by modifying the script.
 - **The later version of the script may change the interface and may not be backward compatible**
 - Copy `deploy.sh` to R pkg directory and add it to `.Rbuildignore`.
 - Create a new token in [github application settings](https://github.com/settings/applications)
@@ -67,19 +66,20 @@ It only works in travis-ci for now.
 travis encrypt GH_TOKEN=your_token_created_on_github
 ```
 
-- Add the following contents to `.travis.yml`
+- Edit `.travis.yml` based on the following template.
 
 ```
 after_success:
   - git config --global user.email "email@example.com"
   - git config --global user.name "Your Name"
-  - ./deploy.sh
+  - ./deploy.sh -s master-src -d master -c 'make -k prebuild'
 env:
   global:
     secure: your_encryped_token
 branches:
   except:
-    - master-pkg
+    ## exclude the deploy branch from build on travis-ci
+    - master
 ```
 
 - Add Makefile if necessary
