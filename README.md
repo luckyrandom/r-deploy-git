@@ -13,14 +13,26 @@ are synced with code, in each build.
 
 The script `deploy.sh` is provided to handle sync and push to
 github. It works on travis-ci, so each successful built commit on
-master branch is prebuilt and deployed to master-pkg branch on github.
+source branch is prebuilt and deployed to deploy branch on github.
 
-# Benefits #
+# Pros and Cons #
+
+## Pros ##
+
  - The maintainers do not need to worry about sync Rd files any more.
  - The generated files are not tracked in source branch, so nobody
    will modify them by accident, saving your trouble from
    explaining why they should not be edited.
  - Only commits that pass the test will be deployed to pkg branch.
+
+## Cons ##
+
+  - We have to handle an extra branch. By default, developers are
+    working on master branch and `devtools::install_github` install
+    from maste branch. With an extra deploy branch, either the
+    developers have to switch to the src branch, such as master-src,
+    or the users must install from the deploy branch, such as
+    master-pkg.
 
 # What does `deploy.sh` do? #
 It only works in travis-ci for now.
