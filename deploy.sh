@@ -194,6 +194,7 @@ PROJECT_DIR=$(git rev-parse --show-toplevel)
 PROJECT_NAME=$(basename $PROJECT_DIR)
 BUILD_DIR=${PROJECT_DIR}/_build/${PROJECT_NAME}
 
+GH_TOKEN=${GH_TOKEN:-${GITHUB_TOKEN}}
 set +x
 REMOTE_URL_HTTPS="https://${GH_TOKEN}@${REMOTE_URL#git://}"
 set -x
